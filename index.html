@@ -3,196 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studio AFM Télé-Temps</title>
+    <title>Studio AFM Télé-Temps : Boutique Souvenir</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --folk-orange: #e67e22; --success: #27ae60; --bg: #fdfaf6; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: #333; padding: 15px; line-height: 1.6; }
-        .container { max-width: 950px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; }
         h1 { text-align: center; color: var(--primary); margin-bottom: 5px; font-size: 2.2em; }
         .description { text-align: center; color: #7f8c8d; margin-bottom: 30px; font-style: italic; font-size: 0.9em; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .form-group { display: flex; flex-direction: column; background: #fcfcfc; padding: 12px; border-radius: 10px; border: 1px solid #f0f0f0; }
+        .bonus { border: 1px solid #e1f5fe; background: #f1f8ff; }
         label { font-weight: bold; margin-bottom: 5px; color: var(--primary); font-size: 0.8em; text-transform: uppercase; }
         select, input { padding: 8px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 5px; font-size: 0.85em; width: 100%; box-sizing: border-box; }
-        input { border-style: dashed; background: #fffcf9; }
         .result-area { background: #f4f7f9; padding: 25px; border-radius: 15px; border: 2px solid var(--accent); margin-top: 20px; }
         .result-label { font-weight: bold; color: var(--accent); margin-bottom: 10px; display: block; font-size: 0.9em; }
         .result-text { font-family: 'Consolas', monospace; font-size: 0.9em; color: #34495e; white-space: pre-wrap; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        .trans-text { font-family: 'Segoe UI', sans-serif; font-size: 0.95em; color: #2c3e50; font-style: italic; margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; }
-        .negative-text { font-family: 'Consolas', monospace; font-size: 0.8em; color: #c0392b; border-top: 1px dashed #ddd; padding-top: 15px; margin-bottom: 20px; }
         .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
         button { padding: 10px 22px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 0.9em; }
         .btn-gen { background: var(--accent); color: white; }
         .btn-random { background: var(--folk-orange); color: white; }
         .btn-copy { background: var(--primary); color: white; }
-        button:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-export { background: var(--success); color: white; }
         .info-section { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; border-top: 2px solid #eee; padding-top: 30px; }
         .info-card { background: #fef9f3; padding: 20px; border-radius: 15px; border: 1px solid #fae5d3; }
         .info-card h2 { color: var(--folk-orange); font-size: 1.2em; margin-top: 0; border-bottom: 1px solid #fae5d3; padding-bottom: 10px; }
-        .info-card h3 { font-size: 0.95em; color: var(--primary); margin-bottom: 5px; }
-        .info-card p { font-size: 0.85em; margin-bottom: 15px; color: #555; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🎨 AFM Télé-Temps</h1>
-    <p class="description">Le studio de téléportation créative en Art Folk Moderne.</p>
+    <h1>🎨 AFM Télé-Temps : Boutique Souvenir</h1>
+    <p class="description">Générez vos scènes et transformez-les en objets de collection.</p>
 
     <div class="grid">
         <div class="form-group">
             <label>👤 Personnage</label>
-            <select id="char">
-                <option value="">-- Aucun / Libre --</option>
-                <option value="A curious child with messy hair" data-fr="Un enfant curieux">Enfant curieux</option>
-                <option value="A wise ancient empress" data-fr="Une impératrice sage">Impératrice sage</option>
-                <option value="A clunky vintage robot" data-fr="Un vieux robot vintage">Vieux robot</option>
-                <option value="A mad scientist" data-fr="Un savant fou">Savant fou</option>
+            <select id="char"><option value="" selected>-- Aucun --</option>
+                <option value="A curious child with messy hair">Enfant curieux</option>
+                <option value="A wise ancient empress">Impératrice sage</option>
+                <option value="A mad scientist with goggles">Savant fou</option>
             </select>
             <input type="text" id="char-custom" placeholder="Saisie libre (ex: Michael Jackson)...">
         </div>
         <div class="form-group">
             <label>🐾 Compagnon / Objet</label>
-            <select id="comp">
-                <option value="">-- Aucun --</option>
-                <option value="a small playful dragon" data-fr="un petit dragon">Petit dragon</option>
-                <option value="a loyal white cat" data-fr="un chat blanc">Chat blanc</option>
-                <option value="a vintage ping-pong table" data-fr="une table de ping-pong">Table de ping-pong</option>
+            <select id="comp"><option value="" selected>-- Aucun --</option>
+                <option value="a small playful dragon">Petit dragon</option>
+                <option value="a vintage ping-pong table">Table de ping-pong</option>
             </select>
             <input type="text" id="comp-custom" placeholder="Saisie libre...">
         </div>
         <div class="form-group">
-            <label>🎭 Action</label>
-            <select id="act">
-                <option value="">-- Aucune --</option>
-                <option value="playing an intense match" data-fr="jouant un match">Jouant un match</option>
-                <option value="sharing a cup of tea" data-fr="partageant un thé">Partageant un thé</option>
-                <option value="exploring the unknown" data-fr="explorant l'inconnu">Explorant l'inconnu</option>
+            <label>⌛ Époque</label>
+            <select id="era"><option value="" selected>-- Classique --</option>
+                <option value="Ancient Egyptian era">Égypte Antique</option>
+                <option value="Cyber-Folk Future">Futur Cyber-Folk</option>
             </select>
-            <input type="text" id="act-custom" placeholder="Action personnalisée...">
-        </div>
-        <div class="form-group">
-            <label>📍 Lieu</label>
-            <select id="loc">
-                <option value="">-- Aucun --</option>
-                <option value="at an oasis with pyramids" data-fr="dans une oasis égyptienne">Oasis et pyramides</option>
-                <option value="in a misty bamboo forest" data-fr="dans une forêt brumeuse">Forêt de bambous</option>
-                <option value="inside a high-tech space station" data-fr="en station spatiale">Station spatiale</option>
-            </select>
-            <input type="text" id="loc-custom" placeholder="Lieu personnalisé...">
-        </div>
-        <div class="form-group">
-            <label>⌛ Format & Époque</label>
-            <select id="era">
-                <option value="">-- Classique AFM --</option>
-                <option value="Ancient Egyptian era" data-fr="époque Égypte antique">Égypte Antique</option>
-                <option value="Cyber-Folk Future" data-fr="futur cyber-folk">Futur Cyber-Folk</option>
-                <option value="presented as a movie poster parody" data-fr="format affiche de film">Affiche de film</option>
-                <option value="presented as a vinyl album cover parody" data-fr="format pochette de disque">Pochette d'album</option>
-            </select>
-            <input type="text" id="era-custom" placeholder="Parodie ou Époque (ex: Thriller)...">
-        </div>
-        <div class="form-group">
-            <label>☁️ Météo / Ciel</label>
-            <select id="sky">
-                <option value="">-- Aucune --</option>
-                <option value="under heavy pouring rain" data-fr="sous la pluie">Pluie battante</option>
-                <option value="with a bright double rainbow" data-fr="avec arc-en-ciel">Double arc-en-ciel</option>
-                <option value="during a soft pastel sunset" data-fr="au coucher du soleil">Coucher de soleil pastel</option>
-            </select>
-            <input type="text" id="sky-custom" placeholder="Météo personnalisée...">
+            <input type="text" id="era-custom" placeholder="Époque personnalisée...">
         </div>
         <div class="form-group">
             <label>🎨 Texture</label>
             <select id="textu">
-                <option value="Porous lime fresco mural texture" data-fr="Fresque à la chaux">Fresque à la chaux</option>
-                <option value="Linocut print texture" data-fr="Linogravure">Linogravure (Linocut)</option>
-                <option value="Cold-press watercolor paper" data-fr="Aquarelle">Aquarelle</option>
+                <option value="Linocut print texture" selected>Linogravure (Linocut)</option>
+                <option value="Porous lime fresco mural texture">Fresque à la chaux</option>
+                <option value="Cold-press watercolor paper">Aquarelle</option>
+            </select>
+        </div>
+        
+        <div class="form-group bonus">
+            <label>🎁 Objet Souvenir (Bonus)</label>
+            <select id="souvenir"><option value="" selected>-- Illustration Seule --</option>
+                <option value="presented as a movie poster parody">Affiche de film</option>
+                <option value="presented as a vinyl album cover parody">Pochette de disque</option>
+                <option value="printed on a souvenir ceramic coffee mug">Mug / Tasse</option>
+                <option value="the central design of a colorful bank note">Billet de banque</option>
+                <option value="embossed on an ancient gold coin">Pièce de monnaie</option>
+                <option value="a small embroidered patch">Écusson / Patch</option>
+                <option value="an enamel collector pin">Pin's de collection</option>
+                <option value="a vintage postcard">Carte postale</option>
+            </select>
+            <input type="text" id="souvenir-custom" placeholder="Autre objet (ex: Timbre)...">
+        </div>
+        <div class="form-group bonus">
+            <label>📐 Format d'image (Ratio)</label>
+            <select id="ratio"><option value="" selected>1:1 (Carré)</option>
+                <option value="16:9">16:9 (TV/Cinéma)</option>
+                <option value="9:16">9:16 (Story/TikTok)</option>
+                <option value="21:9">21:9 (Bannière)</option>
+                <option value="2:3">2:3 (Affiche)</option>
+                <option value="4:5">4:5 (Portrait)</option>
             </select>
         </div>
     </div>
 
     <div class="actions">
-        <button class="btn-gen" onclick="build(false)">🚀 Lancer le Télé-Temps</button>
-        <button class="btn-random" onclick="build(true)">🎲 Surprends-moi !</button>
+        <button class="btn-gen" onclick="build(false)">🚀 Créer l'Objet</button>
+        <button class="btn-random" onclick="build(true)">🎲 Surprise !</button>
     </div>
 
     <div class="result-area" id="res-box" style="display:none;">
         <span class="result-label">PROMPT ANGLAIS (POUR L'IA) :</span>
         <div class="result-text" id="prompt-en"></div>
-        <span class="result-label">VÉRIFICATION (TRADUCTION) :</span>
-        <div class="trans-text" id="prompt-fr"></div>
         <span class="result-label">NEGATIVE PROMPT (SÉCURITÉ STYLE) :</span>
         <div class="negative-text" id="neg-out"></div>
         <div class="actions">
-            <button class="btn-copy" onclick="copyEN()">Copier Scène</button>
-            <button class="btn-copy" style="background:var(--success)" onclick="copyAll()">Copier Pack Complet (IA)</button>
+            <button class="btn-copy" onclick="copyAll()">Copier Pack Complet (IA)</button>
+            <button class="btn-export" onclick="exportTxt()">Exporter .txt</button>
         </div>
     </div>
 
     <div class="info-section">
         <div class="info-card">
-            <h2>📖 Guide d'Usage</h2>
-            <p><strong>Télé-Temps :</strong> Mélangez les époques et les thèmes (ex: Einstein + Égypte Antique) pour créer des fables visuelles.</p>
-            <p><strong>Parodies :</strong> Pour une affiche ou un album, laissez les autres champs vides et utilisez la saisie "Format".</p>
-            <p style="margin-top:20px;">👉 <a href="https://github.com/duglin69/AFM-Tele-Temps" target="_blank" style="color:var(--accent); font-weight:bold; text-decoration:none;">Documentation sur GitHub</a></p>
+            <h2>📖 Boutique Souvenir</h2>
+            <p>Utilisez le menu <strong>Objet Souvenir</strong> pour transformer une scène en objet collector (billet, mug, pin's).</p>
+            <p>Le ratio s'ajuste automatiquement pour Midjourney avec la commande <code>--ar</code>.</p>
+            <p style="margin-top:15px;">👉 <a href="https://github.com/duglin69/AFM-Tele-Temps" target="_blank" style="color:var(--accent); font-weight:bold; text-decoration:none;">Documentation sur GitHub</a></p>
         </div>
         <div class="info-card">
-            <h2>❓ FAQ & Styles</h2>
-            <h3>Pourquoi l'anglais ?</h3>
-            <p>Les IA captent mieux les nuances artistiques et les textures dans cette langue.</p>
+            <h2>❓ FAQ</h2>
+            <h3>Pourquoi "Aucun" par défaut ?</h3>
+            <p>Pour vous laisser le contrôle total. Si vous voulez juste une parodie de pochette d'album, remplissez uniquement le champ "Souvenir".</p>
             <h3>C'est quoi le "Negative Prompt" ?</h3>
-            <p>C'est un filtre qui bloque le photoréalisme pour préserver le style artisanal "fait main" de l'Art Folk Moderne.</p>
+            <p>Un filtre qui garantit le style artisanal et bloque le photoréalisme.</p>
         </div>
     </div>
 </div>
 
 <script>
-    const neg = "Negative Prompt: photorealistic, 3D render, CGI, shiny plastic, smooth digital art, photograph, blurry, extra limbs, watermark, text, signature, duplicate objects, bad anatomy.";
+    const neg = "Negative Prompt: photorealistic, 3D render, CGI, shiny plastic, smooth digital art, photograph, blurry, extra limbs, duplicate objects, watermark.";
 
     function build(isRandom) {
-        const fields = ['char','comp','act','loc','era','sky','textu'];
-        const values = { en: {}, fr: {} };
-
+        const fields = ['char','comp','era','textu','souvenir','ratio'];
+        const v = {};
         fields.forEach(f => {
             const sel = document.getElementById(f);
             const cust = document.getElementById(f+'-custom');
-            if(isRandom) sel.selectedIndex = Math.floor(Math.random() * sel.options.length);
-            const opt = sel.options[sel.selectedIndex];
-            values.en[f] = (cust && cust.value.trim() !== "") ? cust.value : (opt ? opt.value : "");
-            values.fr[f] = (cust && cust.value.trim() !== "") ? values.en[f] : (opt ? opt.getAttribute('data-fr') : "");
+            if(isRandom && f !== 'ratio') sel.selectedIndex = Math.floor(Math.random() * sel.options.length);
+            v[f] = (cust && cust.value.trim() !== "") ? cust.value : sel.value;
         });
 
-        let promptEN = `A vibrant modern folk art illustration with organic forms. Texture: ${values.en.textu}. `;
+        let p = `A vibrant modern folk art illustration with organic symbolic forms. Texture: ${v.textu}. `;
+        
+        // Description du format en langage naturel (pour Gemini/Firefly)
+        if(v.ratio === "16:9" || v.ratio === "21:9") p += "The composition has a wide landscape format. ";
+        if(v.ratio === "9:16" || v.ratio === "2:3") p += "The composition has a vertical portrait format. ";
+        
         let sceneParts = [];
+        if(v.char) sceneParts.push(v.char);
+        if(v.comp) sceneParts.push("with " + v.comp);
+        if(v.era) sceneParts.push("set during the " + v.era);
         
-        if(values.en.char) sceneParts.push(values.en.char);
-        if(values.en.comp) sceneParts.push("with " + values.en.comp);
-        if(values.en.act) sceneParts.push(values.en.act);
-        if(values.en.loc) sceneParts.push(values.en.loc);
-        if(values.en.sky) sceneParts.push(values.en.sky);
+        if(sceneParts.length > 0) p += "Scene: " + sceneParts.join(" ") + ". ";
+        if(v.souvenir) p += `The illustration is ${v.souvenir}. `;
         
-        if(sceneParts.length > 0) promptEN += "Scene: " + sceneParts.join(" ") + ". ";
+        p += "Bold blue and pastel palette. Stylized imperfect lines. ";
         
-        if(values.en.era) {
-            if(values.en.era.toLowerCase().includes("poster") || values.en.era.toLowerCase().includes("cover") || values.en.era.length > 15) {
-                promptEN += `The entire composition is ${values.en.era}. `;
-            } else {
-                promptEN += `Set during the ${values.en.era}. `;
-            }
-        }
+        // Tag technique en fin de prompt (pour Midjourney)
+        if(v.ratio && v.ratio !== "") p += `--ar ${v.ratio}`;
 
-        promptEN += "Bold blue and pastel palette. Stylized imperfect lines.";
-
-        document.getElementById('prompt-en').innerText = promptEN;
-        document.getElementById('prompt-fr').innerText = "Mode intelligent activé. Format/Époque : " + (values.fr.era || "Classique");
+        document.getElementById('prompt-en').innerText = p;
         document.getElementById('neg-out').innerText = neg;
         document.getElementById('res-box').style.display = 'block';
     }
-
-    function copyEN() { navigator.clipboard.writeText(document.getElementById('prompt-en').innerText).then(() => alert("Scène copiée !")); }
     function copyAll() { navigator.clipboard.writeText(document.getElementById('prompt-en').innerText + "\n\n" + neg).then(() => alert("Pack Complet copié !")); }
+    function exportTxt() {
+        const blob = new Blob([document.getElementById('prompt-en').innerText + "\n\n" + neg], { type: 'text/plain' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'afm_souvenir_prompt.txt'; a.click();
+    }
 </script>
-
 </body>
 </html>
