@@ -2,20 +2,21 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Studio Art Folk Moderne : Version Intégrale</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio AFM Télé-Temps : Le Générateur</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --folk-orange: #e67e22; --success: #27ae60; --bg: #fdfaf6; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: #333; padding: 20px; line-height: 1.6; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: #333; padding: 15px; line-height: 1.6; }
         .container { max-width: 950px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        h1 { text-align: center; color: var(--primary); margin-bottom: 5px; }
+        h1 { text-align: center; color: var(--primary); margin-bottom: 5px; font-size: 2.2em; }
         .description { text-align: center; color: #7f8c8d; margin-bottom: 30px; font-style: italic; font-size: 0.9em; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .form-group { display: flex; flex-direction: column; background: #fcfcfc; padding: 12px; border-radius: 10px; border: 1px solid #f0f0f0; }
         label { font-weight: bold; margin-bottom: 5px; color: var(--primary); font-size: 0.8em; text-transform: uppercase; }
-        select, input { padding: 8px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 5px; font-size: 0.85em; }
+        select, input { padding: 8px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 5px; font-size: 0.85em; width: 100%; box-sizing: border-box; }
         input { border-style: dashed; background: #fffcf9; }
         .result-area { background: #f4f7f9; padding: 25px; border-radius: 15px; border: 2px solid var(--accent); margin-top: 20px; }
-        .result-label { font-weight: bold; color: var(--accent); margin-bottom: 10px; display: block; }
+        .result-label { font-weight: bold; color: var(--accent); margin-bottom: 10px; display: block; font-size: 0.9em; }
         .result-text { font-family: 'Consolas', monospace; font-size: 0.9em; color: #34495e; white-space: pre-wrap; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
         .trans-text { font-family: 'Segoe UI', sans-serif; font-size: 0.95em; color: #2c3e50; font-style: italic; margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; }
         .negative-text { font-family: 'Consolas', monospace; font-size: 0.8em; color: #c0392b; border-top: 1px dashed #ddd; padding-top: 15px; margin-bottom: 20px; }
@@ -26,7 +27,7 @@
         .btn-copy { background: var(--primary); color: white; }
         .btn-export { background: var(--success); color: white; }
         button:hover { opacity: 0.9; transform: translateY(-2px); }
-        .info-section { margin-top: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 2px solid #eee; padding-top: 30px; }
+        .info-section { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; border-top: 2px solid #eee; padding-top: 30px; }
         .info-card { background: #fef9f3; padding: 20px; border-radius: 15px; border: 1px solid #fae5d3; }
         .info-card h2 { color: var(--folk-orange); font-size: 1.2em; margin-top: 0; border-bottom: 1px solid #fae5d3; padding-bottom: 10px; }
         .info-card h3 { font-size: 0.95em; color: var(--primary); margin-bottom: 5px; }
@@ -36,91 +37,94 @@
 <body>
 
 <div class="container">
-    <h1>🎨 Studio Art Folk Moderne</h1>
-    <p class="description">Générateur bilingue optimisé pour Midjourney, DALL-E et Gemini.</p>
+    <h1>🎨 AFM Télé-Temps</h1>
+    <p class="description">Le studio de téléportation créative en Art Folk Moderne.</p>
 
     <div class="grid">
         <div class="form-group">
-            <label>👤 Personnage</label>
+            <label>👤 Personnage(s)</label>
             <select id="char">
                 <option value="A curious child with messy hair" data-fr="Un enfant curieux aux cheveux ébouriffés">Enfant curieux</option>
                 <option value="A wise ancient empress" data-fr="Une impératrice ancienne et sage">Impératrice sage</option>
                 <option value="A clunky vintage robot" data-fr="Un vieux robot vintage">Vieux robot</option>
                 <option value="A mad scientist with goggles" data-fr="Un savant fou avec des lunettes">Savant fou</option>
             </select>
-            <input type="text" id="char-custom" placeholder="Saisie libre...">
+            <input type="text" id="char-custom" placeholder="Tapez votre idée (ex: Cléopâtre)...">
         </div>
         <div class="form-group">
-            <label>🐾 Compagnon</label>
+            <label>🐾 Compagnon / Objet</label>
             <select id="comp">
                 <option value="a small playful dragon" data-fr="un petit dragon joueur">Petit dragon</option>
                 <option value="a loyal white cat" data-fr="un fidèle chat blanc">Chat blanc</option>
                 <option value="a mechanical owl" data-fr="une chouette mécanique">Chouette mécanique</option>
+                <option value="a vintage ping-pong table" data-fr="une table de ping-pong vintage">Table de ping-pong</option>
             </select>
-            <input type="text" id="comp-custom" placeholder="Animal libre...">
+            <input type="text" id="comp-custom" placeholder="Animal ou objet personnalisé...">
         </div>
         <div class="form-group">
             <label>🎭 Action</label>
             <select id="act">
-                <option value="playing ping-pong" data-fr="jouant au ping-pong">Jouant au ping-pong</option>
+                <option value="playing an intense match" data-fr="jouant un match intense">Jouant un match</option>
                 <option value="sharing a cup of tea" data-fr="partageant un thé">Partageant un thé</option>
                 <option value="painting the cosmos" data-fr="peignant le cosmos">Peignant le cosmos</option>
             </select>
-            <input type="text" id="act-custom" placeholder="Action libre...">
+            <input type="text" id="act-custom" placeholder="Action personnalisée...">
         </div>
         <div class="form-group">
             <label>📍 Lieu</label>
             <select id="loc">
                 <option value="at an oasis with pyramids" data-fr="dans une oasis avec des pyramides">Oasis et pyramides</option>
-                <option value="in a bamboo forest" data-fr="dans une forêt de bambous">Forêt de bambous</option>
-                <option value="inside a space station" data-fr="dans une station spatiale">Station spatiale</option>
+                <option value="in a misty bamboo forest" data-fr="dans une forêt de bambous brumeuse">Forêt de bambous</option>
+                <option value="inside a high-tech space station" data-fr="dans une station spatiale high-tech">Station spatiale</option>
             </select>
-            <input type="text" id="loc-custom" placeholder="Lieu libre...">
+            <input type="text" id="loc-custom" placeholder="Lieu personnalisé...">
         </div>
         <div class="form-group">
-            <label>⌛ Époque</label>
+            <label>⌛ Format & Époque</label>
             <select id="era">
                 <option value="Ancient Egyptian era" data-fr="l'époque de l'Égypte antique">Égypte Antique</option>
                 <option value="Cyber-Folk Future" data-fr="un futur cyber-folk">Futur Cyber-Folk</option>
                 <option value="Victorian Steampunk" data-fr="l'époque Steampunk victorienne">Steampunk Victorien</option>
+                <option value="presented as a movie poster" data-fr="présenté comme une affiche de film">Affiche de film (Parodie)</option>
+                <option value="presented as a vinyl album cover" data-fr="présenté comme une pochette de disque">Pochette d'album</option>
             </select>
-            <input type="text" id="era-custom" placeholder="Époque libre...">
+            <input type="text" id="era-custom" placeholder="Époque ou Format libre...">
         </div>
         <div class="form-group">
-            <label>☁️ Météo</label>
+            <label>☁️ Météo / Ciel</label>
             <select id="sky">
-                <option value="under heavy rain" data-fr="sous une pluie battante">Pluie battante</option>
-                <option value="with a double rainbow" data-fr="avec un double arc-en-ciel">Double arc-en-ciel</option>
-                <option value="during a pastel sunset" data-fr="pendant un coucher de soleil pastel">Coucher de soleil pastel</option>
+                <option value="under heavy pouring rain" data-fr="sous une pluie battante">Pluie battante</option>
+                <option value="with a bright double rainbow" data-fr="avec un double arc-en-ciel">Double arc-en-ciel</option>
+                <option value="during a soft pastel sunset" data-fr="pendant un coucher de soleil pastel">Coucher de soleil pastel</option>
             </select>
-            <input type="text" id="sky-custom" placeholder="Météo libre...">
+            <input type="text" id="sky-custom" placeholder="Météo personnalisée...">
         </div>
-        <div class="form-group" style="grid-column: span 2;">
-            <label>🎨 Texture Dominante</label>
+        <div class="form-group" style="grid-column: span 1;">
+            <label>🎨 Texture</label>
             <select id="textu">
                 <option value="Porous lime fresco mural texture" data-fr="Texture de fresque murale à la chaux">Fresque à la chaux</option>
                 <option value="Linocut print texture" data-fr="Texture de linogravure">Linogravure (Linocut)</option>
                 <option value="Cold-press watercolor paper" data-fr="Papier aquarelle à grain">Aquarelle</option>
-                <option value="Vintage screenprint texture" data-fr="Texture de sérigraphie vintage">Sérigraphie</option>
+                <option value="Vintage screenprint texture" data-fr="Sérigraphie vintage">Sérigraphie</option>
             </select>
         </div>
     </div>
 
     <div class="actions">
-        <button class="btn-gen" onclick="build(false)">🚀 Générer & Traduire</button>
+        <button class="btn-gen" onclick="build(false)">🚀 Lancer le Télé-Temps</button>
         <button class="btn-random" onclick="build(true)">🎲 Surprends-moi !</button>
     </div>
 
     <div class="result-area" id="res-box" style="display:none;">
-        <span class="result-label">PROMPT ANGLAIS (IA) :</span>
+        <span class="result-label">PROMPT ANGLAIS (POUR L'IA) :</span>
         <div class="result-text" id="prompt-en"></div>
-        <span class="result-label">TRADUCTION (VÉRIFICATION) :</span>
+        <span class="result-label">TRADUCTION DE VÉRIFICATION :</span>
         <div class="trans-text" id="prompt-fr"></div>
-        <span class="result-label">PROMPT NÉGATIF :</span>
+        <span class="result-label">NEGATIVE PROMPT (SÉCURITÉ STYLE) :</span>
         <div class="negative-text" id="neg-out"></div>
         <div class="actions">
-            <button class="btn-copy" onclick="copyEN()">Copier l'Anglais</button>
-            <button class="btn-copy" style="background:var(--success)" onclick="copyAll()">Copier Tout (IA)</button>
+            <button class="btn-copy" onclick="copyEN()">Copier Scène</button>
+            <button class="btn-copy" style="background:var(--success)" onclick="copyAll()">Copier Pack Complet (IA)</button>
             <button class="btn-export" onclick="exportTxt()">Exporter .txt</button>
         </div>
     </div>
@@ -128,25 +132,41 @@
     <div class="info-section">
         <div class="info-card">
             <h2>📖 Guide d'Usage</h2>
-            <h3>L'Anglais pour la Précision</h3>
-            <p>Les IA captent mieux les styles artistiques comme l'AFM en anglais.</p>
-            <h3>L'Esprit AFM</h3>
-            <p>Le résultat privilégie toujours les formes organiques et le design plat.</p>
+            <p><strong>Télé-Temps :</strong> Mélangez les époques et les genres (ex: Savant fou + Égypte antique).</p>
+            <p><strong>Validation :</strong> La traduction française vous aide à vérifier que l'ambiance "Nostalgique & Optimiste" est respectée.</p>
         </div>
         <div class="info-card">
-            <h2>🎨 Glossaire des Textures</h2>
+            <h2>🎨 Glossaire AFM</h2>
             <h3>Linogravure</h3>
-            <p>Rendu robuste avec des marques d'encre visibles et un aspect gravé.</p>
-            <h3>Aquarelle</h3>
-            <p>Douceur onirique avec des fusions de pigments pastels sur papier à grain.</p>
+            <p>Rendu robuste et artisanal avec des marques d'encre visibles.</p>
             <h3>Fresque</h3>
-            <p>Aspect minéral, mat et légèrement craquelé pour un rendu historique.</p>
+            <p>Aspect minéral et craquelé, idéal pour l'Antiquité.</p>
+        </div>
+    </div>
+    <div class="info-section">
+        <div class="info-card">
+            <h2>📖 Guide d'Usage</h2>
+            <p><strong>Télé-Temps :</strong> Mélangez les époques (ex: Einstein + Égypte).</p>
+            <p><strong>Validation :</strong> La traduction vérifie l'ambiance "Nostalgique & Optimiste".</p>
+            <p style="margin-top:20px;">👉 <a href="https://github.com/duglin69/AFM-Tele-Temps" target="_blank" style="color:var(--accent); font-weight:bold;">Consulter la documentation complète (README)</a></p>
+        </div>
+        
+        <div class="info-card">
+            <h2>❓ Foire Aux Questions (FAQ)</h2>
+            <h3>Pourquoi le prompt est-il en anglais ?</h3>
+            <p>Les modèles d'IA (Midjourney, DALL-E) captent mieux les nuances artistiques et les textures dans cette langue.</p>
+            
+            <h3>C'est quoi le "Negative Prompt" ?</h3>
+            <p>C'est un filtre de sécurité qui ordonne à l'IA de rejeter le photoréalisme pour garder un style artisanal "fait main".</p>
+            
+            <h3>Puis-je utiliser mes propres idées ?</h3>
+            <p>Oui ! Utilisez les champs "Saisie libre" pour créer des hybridations uniques. Le style AFM s'adaptera automatiquement.</p>
         </div>
     </div>
 </div>
 
 <script>
-    const neg = "Negative Prompt: photorealistic, 3D render, CGI, shiny plastic, smooth digital art, photograph, deformed, duplicate objects.";
+    const neg = "Negative Prompt: photorealistic, 3D render, CGI, shiny plastic, smooth digital art, hyperrealistic, photograph, blurry, extra limbs, watermark, text, signature, duplicate objects, bad anatomy.";
 
     function build(isRandom) {
         const fields = ['char','comp','act','loc','era','sky','textu'];
@@ -157,11 +177,11 @@
             if(isRandom) sel.selectedIndex = Math.floor(Math.random() * sel.options.length);
             const opt = sel.options[sel.selectedIndex];
             values.en[f] = (cust && cust.value.trim() !== "") ? cust.value : opt.value;
-            values.fr[f] = (cust && cust.value.trim() !== "") ? cust.value : opt.getAttribute('data-fr');
+            values.fr[f] = (cust && cust.value.trim() !== "") ? (f === 'era' ? 'format/époque personnalisé' : cust.value) : opt.getAttribute('data-fr');
         });
 
         const sEN = `A vibrant modern folk art illustration with organic symbolic forms. Textures: ${values.en.textu}. Scene: ${values.en.char} with ${values.en.comp} ${values.en.act} ${values.en.loc} during ${values.en.era}. Weather: ${values.en.sky}. Bold blue and pastel palette.`;
-        const sFR = `Illustration folk moderne vibrante avec formes organiques. Texture : ${values.fr.textu}. Scène : ${values.fr.char} avec ${values.fr.comp} ${values.fr.act} ${values.fr.loc} en ${values.fr.era} (${values.fr.sky}). Palette bleus & pastels.`;
+        const sFR = `Illustration AFM vibrante. Texture : ${values.fr.textu}. Scène : ${values.fr.char} avec ${values.fr.comp} ${values.fr.act} ${values.fr.loc} en ${values.fr.era} (${values.fr.sky}).`;
 
         document.getElementById('prompt-en').innerText = sEN;
         document.getElementById('prompt-fr').innerText = sFR;
@@ -169,11 +189,11 @@
         document.getElementById('res-box').style.display = 'block';
     }
 
-    function copyEN() { navigator.clipboard.writeText(document.getElementById('prompt-en').innerText).then(() => alert("Copié !")); }
-    function copyAll() { navigator.clipboard.writeText(document.getElementById('prompt-en').innerText + "\n\n" + neg).then(() => alert("Copié !")); }
+    function copyEN() { navigator.clipboard.writeText(document.getElementById('prompt-en').innerText).then(() => alert("Scène copiée !")); }
+    function copyAll() { navigator.clipboard.writeText(document.getElementById('prompt-en').innerText + "\n\n" + neg).then(() => alert("Pack Complet copié !")); }
     function exportTxt() {
         const blob = new Blob([document.getElementById('prompt-en').innerText + "\n\n" + neg], { type: 'text/plain' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'prompt_afm.txt'; a.click();
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'prompt_afm_tele_temps.txt'; a.click();
     }
 </script>
 
