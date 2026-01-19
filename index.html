@@ -144,13 +144,13 @@
         <div class="form-group bonus">
             <label>📐 Format (Ratio)</label>
             <select id="ratio">
-                <option value="1:1" selected>1:1 (Mug / Pin's / Pièce / Écusson)</option>
+                <option value="1:1" selected>1:1 (Mug - Vue de l'objet / Pin's / Pièce de monnaie / Écusson)</option>
+                <option value="21:9">21:9 (Mug - Bandeau complet / Bannière Facebook / Billet long)</option>
+                <option value="2:1">2:1 (Billet de banque classique)</option>
                 <option value="3:2">3:2 (Carte postale / Photo paysage)</option>
                 <option value="5:4">5:4 (Timbre-poste classique)</option>
                 <option value="3:4">3:4 (Étiquette de vin / Portrait élégant)</option>
                 <option value="2:3">2:3 (Affiche de film / Carte portrait)</option>
-                <option value="2:1">2:1 (Billet de banque classique)</option>
-                <option value="21:9">21:9 (Billet long / Bannière Facebook)</option>
                 <option value="16:9">16:9 (Format TV / Cinéma)</option>
                 <option value="9:16">9:16 (Story Instagram / TikTok)</option>
             </select>
@@ -180,12 +180,15 @@
     <div class="info-section">
         <div class="info-card">
             <h2>📖 Guide Expert</h2>
-            <p><strong>Ratios :</strong> Utilisez le <strong>2:1</strong> pour les billets et le <strong>3:4</strong> pour vos étiquettes de vin nationales.</p>
-            <p><strong>Langue :</strong> Les saisies personnalisées doivent être en <strong>anglais</strong> pour une précision totale de l'IA.</p>
+            <h3>Mug : Vue vs Bandeau</h3>
+            <p>Utilisez le <strong>1:1</strong> pour voir le mug en photo (mockup). Utilisez le <strong>21:9</strong> pour générer le bandeau panoramique à imprimer tout autour du mug.</p>
+            <h3>Ratios Nationaux</h3>
+            <p>Le <strong>5:4</strong> respecte le format timbre-poste classique, tandis que le <strong>3:4</strong> est idéal pour vos étiquettes de vin.</p>
         </div>
         <div class="info-card">
             <h2>❓ FAQ</h2>
-            <p><strong>Pourquoi ce Pack ?</strong> Le prompt anglais guide l'IA vers les formes organiques, tandis que le Negative Prompt bloque le photoréalisme.</p>
+            <p><strong>Pourquoi l'anglais ?</strong> Les IA saisissent mieux les détails artisanaux comme la linogravure ou les mosaïques avec des termes anglophones.</p>
+            <p><strong>Réinitialisation :</strong> Actualisez simplement la page pour tout effacer.</p>
         </div>
     </div>
 </div>
@@ -196,31 +199,43 @@
     function resetAll() { document.getElementById('afm-form').reset(); document.getElementById('res-box').style.display = 'none'; }
 
     function build(isRandom) {
-        const fields = ['char','comp','act','loc','era','textu','souvenir','ratio'];
-        const v = {}; const fr = [];
-        fields.forEach(f => {
-            const sel = document.getElementById(f);
-            const cust = document.getElementById(f+'-custom');
-            if(isRandom && f !== 'ratio') sel.selectedIndex = Math.floor(Math.random() * sel.options.length);
-            const opt = sel.options[sel.selectedIndex];
-            v[f] = (cust && cust.value.trim() !== "") ? cust.value : (opt ? opt.value : "");
-            if(v[f]) fr.push(opt.getAttribute('data-fr') || ("["+v[f]+"]"));
-        });
+    const fields = ['char','comp','act','loc','era','textu','souvenir','ratio'];
+    const v = {}; const fr = [];
+    
+    fields.forEach(f => {
+        const sel = document.getElementById(f);
+        const cust = document.getElementById(f+'-custom');
+        if(isRandom && f !== 'ratio') sel.selectedIndex = Math.floor(Math.random() * sel.options.length);
+        const opt = sel.options[sel.selectedIndex];
+        v[f] = (cust && cust.value.trim() !== "") ? cust.value : (opt ? opt.value : "");
+        if(v[f]) fr.push(opt.getAttribute('data-fr') || ("["+v[f]+"]"));
+    });
 
-        let p = `A vibrant modern folk art illustration with organic forms. Texture: ${v.textu}. `;
-        if(["16:9","2:1","21:9","3:2"].includes(v.ratio)) p += "Wide landscape composition. ";
-        if(["2:3","3:4","9:16"].includes(v.ratio)) p += "Vertical portrait composition. ";
-
-        let sc = []; if(v.char) sc.push(v.char); if(v.comp) sc.push("with "+v.comp); if(v.act) sc.push(v.act); if(v.loc) sc.push(v.loc); if(v.era) sc.push("set in "+v.era);
-        if(sc.length > 0) p += "Scene: " + sc.join(" ") + ". ";
-        if(v.souvenir) p += `The artwork is ${v.souvenir}. `;
-        p += "Bold palette. Stylized imperfect lines. --ar " + v.ratio;
-
-        document.getElementById('prompt-en').innerText = p;
-        document.getElementById('prompt-fr').innerText = "Vérification : " + fr.join(" + ") + " (Art Folk Moderne)";
-        document.getElementById('neg-out').innerText = neg;
-        document.getElementById('res-box').style.display = 'block';
+    // --- LOGIQUE DE FORMAT AMÉLIORÉE ---
+    let p = `A vibrant modern folk art illustration with organic forms. Texture: ${v.textu}. `;
+    
+    if(v.ratio === "21:9") {
+        p += "Seamless panoramic wrap-around composition. "; // Ajout automatique pour le Mug Wrap
+    } else if(["16:9","2:1","3:2"].includes(v.ratio)) {
+        p += "Wide landscape composition. ";
     }
+    
+    if(["2:3","3:4","9:16"].includes(v.ratio)) {
+        p += "Vertical portrait composition. ";
+    }
+
+    let sc = []; if(v.char) sc.push(v.char); if(v.comp) sc.push("with "+v.comp); if(v.act) sc.push(v.act); if(v.loc) sc.push(v.loc); if(v.era) sc.push("set in "+v.era);
+    
+    if(sc.length > 0) p += "Scene: " + sc.join(" ") + ". ";
+    if(v.souvenir) p += `The artwork is ${v.souvenir}. `;
+    
+    p += "Bold palette. Stylized imperfect lines. --ar " + v.ratio;
+
+    document.getElementById('prompt-en').innerText = p;
+    document.getElementById('prompt-fr').innerText = "Vérification : " + fr.join(" + ") + " (Art Folk Moderne)";
+    document.getElementById('neg-out').innerText = neg;
+    document.getElementById('res-box').style.display = 'block';
+}
 
     function copyScene() { navigator.clipboard.writeText(document.getElementById('prompt-en').innerText).then(() => alert("Scène copiée !")); }
     function copyAll() { navigator.clipboard.writeText(document.getElementById('prompt-en').innerText + "\n\n" + neg).then(() => alert("Pack Complet copié !")); }
